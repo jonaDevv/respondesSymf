@@ -3,41 +3,28 @@
 {% block title %}Pregunta: {{ pregunta.enunciado }}{% endblock %}
 
 {% block body %}
-    <h1>{{ pregunta.enunciado }}</h1>
+    <a href="{{ path('app_pregunta') }}" class="">Volver al listado</a>
 
-    <h3>Respuestas por opción</h3>
-    <ul>
-        <li>Opción A: {{ conteos['a'] }}</li>
-        <li>Opción B: {{ conteos['b'] }}</li>
-        <li>Opción C: {{ conteos['c'] }}</li>
-        <li>Opción D: {{ conteos['d'] }}</li>
-    </ul>
+    <div class="container">
+        <h1>{{ pregunta.enunciado }}</h1>
+        
+        <div class="opciones" data-pregunta-id="{{ pregunta.id }}" data-usuario-id="{{ app.user.id }}">
+            <span data-opcion="a">{{pregunta.a}}</span>
+            <span data-opcion="b">{{pregunta.b}}</span>
+            <span data-opcion="c">{{pregunta.c}}</span>
+            <span data-opcion="d">{{pregunta.d}}</span>
+        </div>
+        
+        <button class="responder-btn">Responder</button>
+        
+    </div>
+
 
     <!-- Si quieres mostrar un gráfico, puedes usar Chart.js -->
     <canvas id="respuestasChart" width="400" height="200"></canvas>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        var ctx = document.getElementById('respuestasChart').getContext('2d');
-        var respuestasChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['Opción A', 'Opción B', 'Opción C', 'Opción D'],
-                datasets: [{
-                    label: 'Respuestas',
-                    data: [{{ conteos['a'] }}, {{ conteos['b'] }}, {{ conteos['c'] }}, {{ conteos['d'] }}],
-                    backgroundColor: ['red', 'blue', 'green', 'yellow'],
-                    borderColor: ['darkred', 'darkblue', 'darkgreen', 'darkyellow'],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-    </script>
+    console.log({{ pregunta.id | json_encode(constant('JSON_PRETTY_PRINT')) }});
+</script>
+    
 {% endblock %}

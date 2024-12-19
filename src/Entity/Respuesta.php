@@ -14,12 +14,12 @@ class Respuesta
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'respuestas')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'respuestas')]
+    #[ORM\JoinColumn(name:"user_id_id", referencedColumnName:"id", nullable:false)]
     private ?User $user_id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'respuestas')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(targetEntity: Pregunta::class, inversedBy: 'respuestas')]
+    #[ORM\JoinColumn(name:"pregunta_id_id", referencedColumnName:"id", nullable:false)]
     private ?Pregunta $pregunta_id = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
@@ -80,4 +80,6 @@ class Respuesta
 
         return $this;
     }
+
+   
 }

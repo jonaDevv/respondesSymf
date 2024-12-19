@@ -4,32 +4,28 @@
 
 {% block body %}
 
-        {% if app.user %}
-            <div class="mb-3">
-                You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
-            </div>
-        {% endif %}
+        
 <div class="container">
-    <h1>Preguntas activas</h1>
+    <h1 class="text-center">Preguntas activas</h1>
 
     <!-- Tabla personalizada -->
     <table class="table">
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Enunciado</th>
+              
+               
                 
             </tr>
         </thead>
         <tbody>
             {% for pregunta in pagination %}
                 <tr>
-                    <td>{{ pregunta.id }}</td>
-                    <td>{{ pregunta.enunciado }}</td>
+                 
+                    <td class="pregunta_enun">{{ pregunta.enunciado }}</td>
                     <td>
                         
                      
-                        <a href="{{ path('pregunta_show', {id: pregunta.id}) }}">show</a>
+                        <a class="responder-btn" href="{{ path('pregunta_show', {id: pregunta.id}) }}">show</a>
                        
                       
                     </td>

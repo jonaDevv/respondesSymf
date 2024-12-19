@@ -195,4 +195,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return sprintf('User[id=%d, email=%s]', $this->getId(), $this->getEmail());
+    }
 }
