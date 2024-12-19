@@ -7,6 +7,7 @@ import './bootstrap.js';
  */
 import './styles/app.css';
 import './styles/show.css';
+import './styles/header.css';
 import './styles/listado.css';
 import './js/resultadosjs.js';
 

@@ -28,3 +28,4 @@ final class CleanBDSchedule implements ScheduleProviderInterface
         ;
     }
 }
+//php bin/console messenger:consume scheduler_CleanBDTask --verbose

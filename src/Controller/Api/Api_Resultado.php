@@ -106,6 +106,36 @@ class Api_Resultado extends AbstractController
         // Redirigir o mostrar un mensaje
          return new JsonResponse(['respuesta' => 'Respuesta creada correctamente']);
     }
+
+
+
+    #[Route('/api/ha-respondido', name: 'api_ha_respondido', methods: ['POST'])]
+    public function haRespondido(EntityManagerInterface $em,Request $request)
+    {
+        // Decodificar el cuerpo de la solicitud
+        $data = json_decode($request->getContent(), true);
+
+        
+
+        // Obtener los parámetros del body
+        $usuarioId = (int) $data['user_id'];  // Asegúrate de que sea un entero
+        $preguntaId = (int) $data['pregunta_id'];
+
+        // Verificar si el usuario ha respondido a la pregunta
+        $haRespondido = $this->entityManager->getRepository(Respuesta::class)->haRespondidoPregunta($usuarioId, $preguntaId);
+
+        // Devolver el resultado como JSON
+        return new JsonResponse(['haRespondido' => $haRespondido]);
+    }
+
+
+
+
+
+
+
+
+
 }
 
             

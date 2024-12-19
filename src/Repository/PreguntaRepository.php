@@ -43,6 +43,18 @@ class PreguntaRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    // public function getPreguntasInactivasAhora(): array
+    // {
+    //     // Obtiene todas las preguntas cuya fecha de inicio es ahora o en el pasado y están inactivas
+    //     return $this->createQueryBuilder('p')
+    //         ->where('p.fInicio <= :now') // Compara que la fecha de inicio sea en el pasado o ahora
+    //         ->andWhere('p.activa = :activa') // Solo seleccionamos las inactivas
+    //         ->setParameter('now', new \DateTime()) // Compara con la fecha y hora actual
+    //         ->setParameter('activa', false) // Solo seleccionamos las preguntas inactivas
+    //         ->getQuery()
+    //         ->getResult();
+    // }
+
     //    /**
     //     * @return Pregunta[] Returns an array of Pregunta objects
     //     */

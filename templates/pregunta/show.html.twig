@@ -3,9 +3,10 @@
 {% block title %}Pregunta: {{ pregunta.enunciado }}{% endblock %}
 
 {% block body %}
-    <a href="{{ path('app_pregunta') }}" class="">Volver al listado</a>
+    
+<div class="containerBody">
 
-    <div class="container">
+    <div class="containerShow">
         <h1>{{ pregunta.enunciado }}</h1>
         
         <div class="opciones" data-pregunta-id="{{ pregunta.id }}" data-usuario-id="{{ app.user.id }}">
@@ -21,8 +22,10 @@
 
 
     <!-- Si quieres mostrar un gráfico, puedes usar Chart.js -->
-    <canvas id="respuestasChart" width="400" height="200"></canvas>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <div class="respuestasChart">
+    <canvas id="respuestasChart"></canvas></div>
+</div>   
+    <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
     <script>
     console.log({{ pregunta.id | json_encode(constant('JSON_PRETTY_PRINT')) }});
 </script>

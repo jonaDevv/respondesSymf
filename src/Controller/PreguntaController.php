@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Pregunta;
+use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,6 +32,34 @@ class PreguntaController extends AbstractController
         );
     
         return $this->render('pregunta/index.html.twig', [
+            'pagination' => $pagination,
+        ]);
+    }
+
+    #[Route('/pregunta/respondidas', name: 'app_respondidas')]
+    public function respondidas(EntityManagerInterface $entityManager, Request $request, PaginatorInterface $paginator): Response
+    {
+        // Obtener el usuario actual
+        $usuarioId = $this->getUser()->getId();
+
+        // Obtener las preguntas respondidas por el usuario
+        $query = $entityManager->getRepository(Pregunta::class)
+            ->createQueryBuilder('p')
+            ->innerJoin('p.respuestas', 'r')  // Unir con las respuestas
+            ->where('r.user_id = :userId')  // Asegúrate de que el usuario haya respondido la pregunta
+            ->setParameter('userId', $usuarioId)
+            ->andWhere('p.activa = :activa')  // Opcional: si solo quieres preguntas activas
+            ->setParameter('activa', false)  // Asumiendo que 'activa' indica si la pregunta está activa o no
+            ->getQuery();
+
+        // Configuración del paginador
+        $pagination = $paginator->paginate(
+            $query, 
+            $request->query->getInt('page', 1), 
+            10
+        );
+
+        return $this->render('pregunta/respondidas.html.twig', [
             'pagination' => $pagination,
         ]);
     }

@@ -50,6 +50,22 @@ class RespuestaRepository extends ServiceEntityRepository
             throw new \Exception("Error al guardar la respuesta: " . $e->getMessage());
         }
     }
+
+    public function haRespondidoPregunta($usuarioId, $preguntaId)
+    {
+        $query = $this->createQueryBuilder('r')
+            ->select('COUNT(r.id)')
+            ->where('r.user_id = :userId')  // Relación con el usuario
+            ->andWhere('r.pregunta_id = :preguntaId')  // Relación con la pregunta
+            ->setParameter('userId', $usuarioId)
+            ->setParameter('preguntaId', $preguntaId)
+            ->getQuery();
+
+        $count = $query->getSingleScalarResult();
+
+        // Si el contador es mayor que 0, significa que el usuario ha respondido a la pregunta
+        return $count > 0;
+    }
     
 
     

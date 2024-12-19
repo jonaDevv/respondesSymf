@@ -2,15 +2,15 @@
 
 namespace App\Scheduler;
 
-use App\Message\DesactiveQuestion;
+use App\Message\ActiveQuestion;
 use Symfony\Component\Scheduler\Attribute\AsSchedule;
 use Symfony\Component\Scheduler\RecurringMessage;
 use Symfony\Component\Scheduler\Schedule;
 use Symfony\Component\Scheduler\ScheduleProviderInterface;
 use Symfony\Contracts\Cache\CacheInterface;
 
-#[AsSchedule('DesactiveQuestionTask')]
-final class DesactiveQuestionSchedule implements ScheduleProviderInterface
+#[AsSchedule('ActiveQuestionTask')]
+final class ActiveQuestionSchedule implements ScheduleProviderInterface
 {
     public function __construct(
         private CacheInterface $cache,
@@ -21,8 +21,8 @@ final class DesactiveQuestionSchedule implements ScheduleProviderInterface
     {
         return (new Schedule())
             ->add(
-                
-                RecurringMessage::every('1 minute', new DesactiveQuestion()),
+                // @TODO - Modify the frequency to suite your needs
+                RecurringMessage::every('10 seconds', new ActiveQuestion()),
             )
             ->stateful($this->cache)
         ;
