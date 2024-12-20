@@ -22,9 +22,9 @@ final class DesactiveQuestionSchedule implements ScheduleProviderInterface
         return (new Schedule())
             ->add(
                 
-                RecurringMessage::every('1 minute', new DesactiveQuestion()),
+                RecurringMessage::every('5 second', new DesactiveQuestion()),
             )
-            ->stateful($this->cache)
+            ->stateful($this->cache,'desactive_question_state')
         ;
     }
 }

@@ -44,15 +44,15 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('roles', ChoiceType::class, [
-                'choices' => [
-                    'Admin' => 'ROLE_ADMIN',
-                    'User' => 'ROLE_USER',
-                ],
-                'expanded' => true, // Muestra checkboxes
-                'multiple' => true, // Permite seleccionar varios roles
-                'data' => ['ROLE_USER'], // Valor predeterminado como array
-            ])
+            // ->add('roles', ChoiceType::class, [
+            //     'choices' => [
+            //         'Admin' => 'ROLE_ADMIN',
+            //         'User' => 'ROLE_USER',
+            //     ],
+            //     'expanded' => true, // Muestra checkboxes
+            //     'multiple' => true, // Permite seleccionar varios roles
+            //     'data' => ['ROLE_USER'], // Valor predeterminado como array
+            // ])
         ;
     }
 

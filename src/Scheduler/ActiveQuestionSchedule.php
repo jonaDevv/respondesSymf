@@ -24,7 +24,7 @@ final class ActiveQuestionSchedule implements ScheduleProviderInterface
                 // @TODO - Modify the frequency to suite your needs
                 RecurringMessage::every('10 seconds', new ActiveQuestion()),
             )
-            ->stateful($this->cache)
+            ->stateful($this->cache,'active_question_state')
         ;
     }
 }

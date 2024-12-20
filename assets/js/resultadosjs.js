@@ -194,7 +194,7 @@ function graficoRespuestas(id) {
             });
         })
         .catch(error => {
-            console.error('Error al cargar los datos:', error);
+            // console.error('Error al cargar los datos:', error);
         });
 }
 
@@ -216,9 +216,9 @@ async function haRespondido(dat) {
         return result;
     
     } catch (error) {
-        // En este punto mostramos el error completo, con detalles
-        console.error('Error al enviar respuesta:', error.message);
-        console.error('Detalles del error:', error);
+        // // En este punto mostramos el error completo, con detalles
+        // console.error('Error al enviar respuesta:', error.message);
+        // console.error('Detalles del error:', error);
     }
 }
 
@@ -263,9 +263,7 @@ async function newRespuesta(data) {
         return result;
 
     } catch (error) {
-        // En este punto mostramos el error completo, con detalles
-        console.error('Error al enviar respuesta:', error.message);
-        console.error('Detalles del error:', error);
+        
     }
 }
 

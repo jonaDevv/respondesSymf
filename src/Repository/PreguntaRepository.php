@@ -43,17 +43,23 @@ class PreguntaRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    // public function getPreguntasInactivasAhora(): array
-    // {
-    //     // Obtiene todas las preguntas cuya fecha de inicio es ahora o en el pasado y están inactivas
-    //     return $this->createQueryBuilder('p')
-    //         ->where('p.fInicio <= :now') // Compara que la fecha de inicio sea en el pasado o ahora
-    //         ->andWhere('p.activa = :activa') // Solo seleccionamos las inactivas
-    //         ->setParameter('now', new \DateTime()) // Compara con la fecha y hora actual
-    //         ->setParameter('activa', false) // Solo seleccionamos las preguntas inactivas
-    //         ->getQuery()
-    //         ->getResult();
-    // }
+    public function getPreguntasInactivasAhora(): array
+    {
+        // Obtiene todas las preguntas cuya fecha de inicio es ahora o en el pasado, y están inactivas, dentro de un rango de 1 minuto
+        $now = new \DateTime();
+        $interval = new \DateInterval('PT1M'); // Intervalo de 1 minuto
+        $oneMinuteAgo = $now->sub($interval); // Fecha y hora de hace 1 minuto
+
+        return $this->createQueryBuilder('p')
+            ->where('p.fInicio <= :now') // Compara que la fecha de inicio sea en el pasado o ahora
+            ->andWhere('p.fInicio >= :oneMinuteAgo') // Compara que la fecha de inicio sea después de hace 1 minuto
+            ->andWhere('p.activa = :activa') // Solo seleccionamos las inactivas
+            ->setParameter('now', $now) // Compara con la fecha y hora actual
+            ->setParameter('oneMinuteAgo', $oneMinuteAgo) // Compara con la fecha y hora de hace 1 minuto
+            ->setParameter('activa', false) // Solo seleccionamos las preguntas inactivas
+            ->getQuery()
+            ->getResult();
+    }
 
     //    /**
     //     * @return Pregunta[] Returns an array of Pregunta objects

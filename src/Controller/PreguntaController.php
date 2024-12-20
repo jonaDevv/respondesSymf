@@ -35,23 +35,60 @@ class PreguntaController extends AbstractController
             'pagination' => $pagination,
         ]);
     }
+//     #[Route('/pregunta', name: 'app_pregunta')]
+    // public function index(EntityManagerInterface $entityManager, Request $request, PaginatorInterface $paginator): Response
+    // {
+    //     $now = new \DateTime(); // Obtener la fecha y hora actual
 
+    //     // Asegúrate de que fInicio y fFin son de tipo DateTime y haz la comparación correctamente
+    //     $query = $entityManager->getRepository(Pregunta::class)->createQueryBuilder('p')
+    //         ->where('p.activa = :activa')
+    //         ->andWhere('p.fInicio >= :now')
+    //         ->andWhere('p.fFin <= :now')
+    //         ->setParameters([
+    //             'activa' => true,
+    //             'now' => $now, // El parámetro 'now' debe ser un objeto DateTime
+    //         ])
+    //         ->getQuery();
+
+    //     // Configuración del paginador
+    //     $pagination = $paginator->paginate(
+    //         $query, 
+    //         $request->query->getInt('page', 1), 
+    //         10
+    //     );
+        
+    //     return $this->render('pregunta/index.html.twig', [
+    //         'pagination' => $pagination,
+    //     ]);
+    // }
+   
     #[Route('/pregunta/respondidas', name: 'app_respondidas')]
     public function respondidas(EntityManagerInterface $entityManager, Request $request, PaginatorInterface $paginator): Response
     {
-        // Obtener el usuario actual
-        $usuarioId = $this->getUser()->getId();
+        $user = $this->getUser();
 
+        if ($user === null) {
+            throw $this->createNotFoundException('El usuario no está autenticado.');
+        }
+
+        if (!$user instanceof User) {
+            throw $this->createNotFoundException('El objeto no es una instancia de User.');
+        }
+
+        // Ahora puedes obtener el ID del usuario
+         $usuarioId = $user->getId();
+
+        // $usuarioId = 30;
         // Obtener las preguntas respondidas por el usuario
         $query = $entityManager->getRepository(Pregunta::class)
             ->createQueryBuilder('p')
             ->innerJoin('p.respuestas', 'r')  // Unir con las respuestas
-            ->where('r.user_id = :userId')  // Asegúrate de que el usuario haya respondido la pregunta
-            ->setParameter('userId', $usuarioId)
-            ->andWhere('p.activa = :activa')  // Opcional: si solo quieres preguntas activas
-            ->setParameter('activa', false)  // Asumiendo que 'activa' indica si la pregunta está activa o no
+            ->where('r.user_id = :usuarioId')  // Asegúrate de que el usuario haya respondido la pregunta
+            ->setParameter('usuarioId', $usuarioId)
             ->getQuery();
 
+        
         // Configuración del paginador
         $pagination = $paginator->paginate(
             $query, 
@@ -63,6 +100,8 @@ class PreguntaController extends AbstractController
             'pagination' => $pagination,
         ]);
     }
+
+
 
     #[Route('/pregunta/{id}', name: 'pregunta_show')]
     public function show(Pregunta $pregunta, RespuestaRepository $respuestaRepository): Response
