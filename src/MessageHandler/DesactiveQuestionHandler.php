@@ -50,6 +50,8 @@ final class DesactiveQuestionHandler
         // Guardar todos los cambios a la base de datos
         $this->entityManager->flush();
         echo "Proceso completado.\n";
+
+        
     }
 
     

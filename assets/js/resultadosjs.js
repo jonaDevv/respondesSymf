@@ -22,8 +22,11 @@ window.addEventListener('turbo:load', function () {
        
     });
 
-    
     graficoRespuestas(preguntaIDD);
+    
+    setInterval(function() {
+        graficoRespuestas(preguntaIDD);
+    }, 10000);
 
     // Declarar las variables fuera del alcance de los eventos
     let opcionSeleccionada = null;

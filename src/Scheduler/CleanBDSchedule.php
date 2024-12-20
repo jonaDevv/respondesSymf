@@ -24,7 +24,7 @@ final class CleanBDSchedule implements ScheduleProviderInterface
                 // @TODO - Modify the frequency to suite your needs
                 RecurringMessage::every('1 second', new CleanBD()),
             )
-            ->stateful($this->cache)
+            ->stateful($this->cache,'clean_bd_state')
         ;
     }
 }
